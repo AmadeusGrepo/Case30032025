@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://cp.skysportaustria.at" />
+
+<script type="text/javascript" src="https://www.skysportaustria.at/resources/22667a2d678daf2b6a9395fbcc325974c5d0011c50caa"  ></script><script type="text/javascript" data-description="sourcepoint stub code">
+  function _typeof(t){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(){for(var t,e,o=[],n=window,r=n;r;){try{if(r.frames.__tcfapiLocator){t=r;break}}catch(t){}if(r===n.top)break;r=n.parent}t||(function t(){var e=n.document,o=!!n.frames.__tcfapiLocator;if(!o)if(e.body){var r=e.createElement("iframe");r.style.cssText="display:none",r.name="__tcfapiLocator",e.body.appendChild(r)}else setTimeout(t,5);return!o}(),n.__tcfapi=function(){for(var t=arguments.length,n=new Array(t),r=0;r<t;r++)n[r]=arguments[r];if(!n.length)return o;"setGdprApplies"===n[0]?n.length>3&&2===parseInt(n[1],10)&&"boolean"==typeof n[3]&&(e=n[3],"function"==typeof n[2]&&n[2]("set",!0)):"ping"===n[0]?"function"==typeof n[2]&&n[2]({gdprApplies:e,cmpLoaded:!1,cmpStatus:"stub"}):o.push(n)},n.addEventListener("message",(function(t){var e="string"==typeof t.data,o={};if(e)try{o=JSON.parse(t.data)}catch(t){}else o=t.data;var n="object"===_typeof(o)?o.__tcfapiCall:null;n&&window.__tcfapi(n.command,n.version,(function(o,r){var a={__tcfapiReturn:{returnValue:o,success:r,callId:n.callId}};t&&t.source&&t.source.postMessage&&t.source.postMessage(e?JSON.stringify(a):a,"*")}),n.parameter)}),!1))}();
+</script>
+
+<script type="text/javascript" data-description="sourcepoint configuration">
+  let cmpFromClick = false;
+
+  window._sp_ = {
+    config: {
+    	accountId: 1112,
+    	wrapperAPIOrigin: "https://wrapper-api.sp-prod.net/tcfv2",
+      mmsDomain: "https://cmp.skysportaustria.at",
+      isSPA: true,
+      targetingParams:{
+        acps: 'false',
+        web: 'true'      },
+      events: {
+        onMessageReady: function () {
+        },
+        onMessageChoiceSelect: function (choice_id, choice_type_id) {
+          if(choice_type_id===11) {cmpFromClick = true;}
+        },
+        onMessageReceiveData: function (data) {
+        },
+        onPrivacyManagerAction: function (pmData) {
+          if(pmData !="CANCEL") {
+            cmpFromClick = true;
+          }
+        },
+        onConsentReady: function (consentUUID, euconsent) {
+          if(cmpFromClick) {
+            var consent = new CustomEvent('CMP_onConsentReady');
+            document.body.dispatchEvent(consent);
+          }
+        }
+      }
+    }
+  };
+</script>
+
+<script type="text/javascript" src="https://gdpr-tcfv2.sp-prod.net/wrapperMessagingWithoutDetection.js"></script>
+
+<script type="text/javascript" data-description="contentpass integration">
+  (function() {
+    var cpBaseUrl = 'https://cp.skysportaustria.at';
+    var cpController = cpBaseUrl + '/now.js';
+    var cpPropertyId = '5004b2ec';
+
+    !function(C,o,n,t,P,a,s){C.CPObject=n,C[n]||(C[n]=function(){
+    C[n].q||(C[n].q=[]),C[n].q.push(arguments)}),C[n].l=+new Date,a=o.createElement(t),
+    s=o.getElementsByTagName(t)[0],a.src=P,s.parentNode.insertBefore(a,s)
+    }(window,document,"cp","script",cpController);
+
+    !function(C,o,n,t,P,a,s){C[n]&&!C[n].patched&&(C[n]("extension","authenticate"),
+      P=C[n].q.push,C[n].q.push=function(e){if("authenticate"===e[0]){try{
+      t=-1===(o.cookie||"").indexOf("_cpauthhint=")&&!(C.localStorage||{})._cpuser&&
+      -1===C.location.href.toLowerCase().indexOf("cpauthenticated")}catch(e){t=!1}if(t)
+      return a={isLoggedIn:function(){return!1},hasValidSubscription:function(){return!1}},
+      "function"==typeof e[1]&&e[1](null,a),C[n].afp=!0,P.apply(C[n].q,[["authenticate",null]]),a}
+      return P.apply(C[n].q,[e])})
+    }(window,document,"cp");
+
+    cp('create', cpPropertyId, {
+      baseUrl: cpBaseUrl
+    });
+
+    // cp('render', {
+    //   onFullConsent: function() {
+    //   }
+    // })
+    // 
+    // cp('authenticate', function (err, user) {
+    //   if (err || (!user.isLoggedIn() && !user.hasValidSubscription())) {
+    //     
+    //   }
+    // });
+  })()
+</script>
+
+<script type="text/javascript" data-description="contentpass sourcepoint fast path">
+(function () {
+  cp('authenticate', function(err, user) {
+    if (err || (!user.isLoggedIn() && !user.hasValidSubscription())) {
+      console.log('[SPCP] Taking fast path');
+      (function spExecMsg() {
+        if (window._sp_ && window._sp_.executeMessaging) {
+          if (!window._sp_.config.isSPA) {
+            console.warn('[SPCP] Sourcepoint not in SPA mode!');
+          } else if (window._sp_.version) {
+            console.log('[SPCP] Sourcepoint already running');
+          } else {
+            console.log('[SPCP] Starting Sourcepoint');
+            window._sp_.executeMessaging();
+          }
+        } else {
+          console.log('[SPCP] Sourcepoint not loaded yet. Retrying.');
+          setTimeout(spExecMsg, 10);
+        }
+      })();
+    }
+  });
+})();
+</script>	      <link rel="preload" as="script" href="https://www.skysportaustria.at/resources/22667a2d678daf2b6a9395fbcc325974c5d0011c50caa"/><link rel='preload' href='//data-5d2679d281.skysportaustria.at/iomm/latest/manager/base/es6/bundle.js' as='script' id='IOMmBundle' crossorigin>
+      <!-- <link rel='preload' href='//data-5d2679d281.skysportaustria.at/iomm/latest/bootstrap/loader.js' as='script' crossorigin>
+
+      <script type='text/javascript' src="//data-5d2679d281.skysportaustria.at/iomm/latest/bootstrap/loader.js" crossorigin></script> -->
+
+      <script type='text/javascript'>
+        !function(e,t,n,o,m,s,c,a,i){e.IOMmGlobalObject=n,e.IOMm=e.IOMm||function(){(e.IOMm.q=e.IOMm.q||[]).push(arguments)},e.IOMm.src=o,m=t.createElement("script"),a=t.querySelector('meta[name="iomm_config_esm"]'),c="noModule "in m&&!/Edge/.test(e.navigator.userAgent),c=(!a||!a.content||"es5"!==a.content)&&c,e.IOMm.esm=c,m.src=c?o.replace("es5", "es6"):o.replace("es6", "es5"),m.setAttribute("crossorigin", "anonymous"),(i=t.querySelector('meta[name="iomm_config_loading"]'))&&i.content&&m.setAttribute(i.content,i.content),t.head.appendChild(m)}(window,document, "IOMm","//data-5d2679d281.skysportaustria.at/iomm/latest/manager/base/es6/bundle.js");
+      </script>
+
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<script src="//assets.adobedtm.com/launch-EN3e275555a97146638557ebcc016ec1ff.min.js"></script>
+	<!-- This site is optimized with the Yoast SEO plugin v23.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Sky sichert sich langfristig die Rechte an der Formel 1® für Österreich ab 2021 und kündigt den ersten 24-Stunden Formel 1 Sender des Landes an - Sky Sport Austria</title>
+	<meta name="description" content="Damit zeigt Sky auch in der neuen Rechteperiode ab 2021 das komplette Formel-1-Wochenende live in Österreich, auch in Ultra HD Sky erreicht mit Sky Sport" />
+	<link rel="canonical" href="https://www.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Sky sichert sich langfristig die Rechte an der Formel 1® für Österreich ab 2021 und kündigt den ersten 24-Stunden Formel 1 Sender des Landes an - Sky Sport Austria" />
+	<meta property="og:description" content="Damit zeigt Sky auch in der neuen Rechteperiode ab 2021 das komplette Formel-1-Wochenende live in Österreich, auch in Ultra HD Sky erreicht mit Sky Sport" />
+	<meta property="og:url" content="https://www.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/" />
+	<meta property="og:site_name" content="Sky Sport Austria" />
+	<meta property="article:publisher" content="https://www.facebook.com/SkySportAustria" />
+	<meta property="article:published_time" content="2020-06-22T14:13:49+00:00" />
+	<meta property="article:modified_time" content="2020-06-22T14:14:21+00:00" />
+	<meta property="og:image" content="https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-scaled.jpg" />
+	<meta property="og:image:width" content="2560" />
+	<meta property="og:image:height" content="1707" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="author" content="Albert Schneider" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@skysportaustria" />
+	<meta name="twitter:site" content="@skysportaustria" />
+	<meta name="twitter:label1" content="Verfasst von" />
+	<meta name="twitter:data1" content="Albert Schneider" />
+	<meta name="twitter:label2" content="Geschätzte Lesezeit" />
+	<meta name="twitter:data2" content="3 Minuten" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"NewsArticle","@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#article","isPartOf":{"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/"},"headline":"Sky sichert sich langfristig die Rechte an der Formel 1® für Österreich ab 2021 und kündigt den ersten 24-Stunden Formel 1 Sender des Landes an","datePublished":"2020-06-22T14:13:49+00:00","dateModified":"2020-06-22T14:14:21+00:00","mainEntityOfPage":{"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/"},"wordCount":637,"commentCount":0,"publisher":{"@id":"https://www.skysportaustria.at/#organization"},"image":{"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#primaryimage"},"thumbnailUrl":"https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-scaled.jpg","keywords":["Formel 1","Formel 2","Formel 3","Live","Porsche Super Cup","Rechte","Sky Sport F1","Sky X","Ultra HD"],"articleSection":["Formel 1"],"inLanguage":"de","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#respond"]}]},{"@type":["WebPage","ItemPage"],"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/","url":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/","name":"Sky sichert sich langfristig die Rechte an der Formel 1® für Österreich ab 2021 und kündigt den ersten 24-Stunden Formel 1 Sender des Landes an - Sky Sport Austria","isPartOf":{"@id":"https://www.skysportaustria.at/#website"},"primaryImageOfPage":{"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#primaryimage"},"image":{"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#primaryimage"},"thumbnailUrl":"https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-scaled.jpg","datePublished":"2020-06-22T14:13:49+00:00","dateModified":"2020-06-22T14:14:21+00:00","description":"Damit zeigt Sky auch in der neuen Rechteperiode ab 2021 das komplette Formel-1-Wochenende live in Österreich, auch in Ultra HD Sky erreicht mit Sky Sport","breadcrumb":{"@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#breadcrumb"},"inLanguage":"de","potentialAction":[{"@type":"ReadAction","target":["https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/"]}]},{"@type":"ImageObject","inLanguage":"de","@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#primaryimage","url":"https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-scaled.jpg","contentUrl":"https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-scaled.jpg","width":2560,"height":1707,"caption":"2019 Abu Dhabi GP YAS MARINA CIRCUIT, UNITED ARAB EMIRATES - DECEMBER 01: Lewis Hamilton, Mercedes AMG F1, 1st position, and Max Verstappen, Red Bull Racing, 2nd position, celebrate on the podium with Champagne during the Abu Dhabi GP at Yas Marina Circuit on December 01, 2019 in Yas Marina Circuit, United Arab Emirates. Photo by Zak Mauger / LAT Images Images PUBLICATIONxINxGERxSUIxAUTxHUNxONLY 56I5406"},{"@type":"BreadcrumbList","@id":"https://cms.skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cms.skysportaustria.at/"},{"@type":"ListItem","position":2,"name":"Sky sichert sich langfristig die Rechte an der Formel 1® für Österreich ab 2021 und kündigt den ersten 24-Stunden Formel 1 Sender des Landes an"}]},{"@type":"WebSite","@id":"https://www.skysportaustria.at/#website","url":"https://www.skysportaustria.at/","name":"Sky Sport Austria","description":"Alle News, Ergebnisse, Tabellen, Podcasts, Transfers, Videos und Highlights über Fußball, Tennis, Eishockey, Basketball und vieles mehr aus der Welt des Spitzensports.","publisher":{"@id":"https://www.skysportaustria.at/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.skysportaustria.at/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"de"},{"@type":"Organization","@id":"https://www.skysportaustria.at/#organization","name":"Sky Sport Austria","url":"https://www.skysportaustria.at/","logo":{"@type":"ImageObject","inLanguage":"de","@id":"https://www.skysportaustria.at/#/schema/logo/image/","url":"https://www.skysportaustria.at/wp-content/uploads/2023/11/sharing.jpeg","contentUrl":"https://www.skysportaustria.at/wp-content/uploads/2023/11/sharing.jpeg","width":1280,"height":960,"caption":"Sky Sport Austria"},"image":{"@id":"https://www.skysportaustria.at/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/SkySportAustria","https://x.com/skysportaustria","https://www.instagram.com/skysportaustria/","https://www.youtube.com/user/skysportaustria"]},[]]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<style id='safe-svg-svg-icon-style-inline-css' type='text/css'>
+.safe-svg-cover{text-align:center}.safe-svg-cover .safe-svg-inside{display:inline-block;max-width:100%}.safe-svg-cover svg{height:100%;max-height:100%;max-width:100%;width:100%}
+
+</style>
+<link rel='stylesheet'href='https://www.skysportaustria.at/wp-content/plugins/sky-player/css/player.css?ver=1705916668' type='text/css' media='all' />
+<link rel='stylesheet'href='https://www.skysportaustria.at/wp-content/themes/skysportaustria/style.css?ver=1742308991' type='text/css' media='all' />
+<link rel="https://api.w.org/" href="https://www.skysportaustria.at/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://www.skysportaustria.at/wp-json/wp/v2/posts/4147290" /><link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://www.skysportaustria.at/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.skysportaustria.at%2Fsky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://www.skysportaustria.at/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.skysportaustria.at%2Fsky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an%2F&#038;format=xml" />
+
+		<script type="text/javascript" data-description="contentpass sourcepoint fast path">
+		(function () {
+  		cp('authenticate', function(err, user) {
+  			if (err || (!user.isLoggedIn() && !user.hasValidSubscription())) {
+					console.log("CP FP: Init Adserver");
+  				!function (e, f, u, i) {
+    				if (!document.getElementById(i)){
+      				e.async = 1;
+      				e.src = u;
+      				e.id = i;
+      				f.parentNode.insertBefore(e, f);
+    				}
+  				}(document.createElement('script'),
+  				document.getElementsByTagName('script')[0],
+  				'https://apps.sascdn.com/mh_audience/sdo_sas.js',
+  				'sas');
+    		}
+  		});
+		})();
+		</script>
+		<script type= "application/javascript">
+		var _sasConfig = {
+			networkid: 1003,
+			timeOut: 1000,
+			enableLogging: false,
+			placement: {
+				siteId: 626719,
+				pageName: 'motorsport/formel-1',
+				formats: [{id: 22375},{id: 22373},{id: 22374},{id: 23362}, {id: 23170}, {id: 23362}, {id: 23366},{id: 23167}, {id: 23175}],
+				target: 'type=article;id=4147290'
+			},
+			partners: {}
+		};
+			
+		var sas = sas || {};
+		sas.cmd = sas.cmd || [];
+		sas.cmd.push( function () {
+			sas.setup({
+				networkid : 1003,
+				domain: "https://styria.smartadserver.com" , //Smart BaseURL
+				async: true,
+				renderMode: 2,				
+			});
+		});
+		sas.cmd.push( function () {
+			sas.events.on("ad", function(data) {
+				if([22374, 23170].includes(data.formatId)){
+					document.body.classList.add("ad-loaded--top");
+				}
+			});
+		});
+		
+		
+		window._sasVideoConfig = {
+      id: null,
+			language: 'DE',
+      adData: {
+        sas_networkid: "1003",                    
+        sas_siteid: "626719", 
+        sas_pagename: 'motorsport/formel-1',
+        sas_format_linears: "32764",
+        sas_format_overlays: "32765",
+        sas_target: 'type=article;id=4147290'
+      },
+      adRules: [{
+        duration_min: 0,
+        duration_max: -1,
+        data: {
+          prerolls: {
+            instances: 2,
+            maxAdPodDuration: 0
+          },
+          midrolls: {
+            instances: 0,
+            maxAdPodDuration: 0,
+            percents: ["50"]
+          },
+          postrolls: {
+            instances: 0,
+            maxAdPodDuration: 0
+          },
+          overlays: {
+            instances: 0,
+            percents: [30]
+          }
+        }
+      }],
+      configuration: {
+        player: {
+          enablePause: true, 
+        },
+        publisher: {
+          forceSkipDelay: true,
+          html5SeamlessFullscreen: true,
+          skipDelay: -1,
+          muteAdsAtStartup: false
+        }
+      }
+    };
+			
+		</script>
+
+		
+		
+		<script type="text/javascript">
+  		window._taboola = window._taboola || [];
+  		_taboola.push({article:'auto'});
+
+			cp('render', {
+				onFullConsent: function () {
+					console.log("CP FP: Init Taboola");
+  				!function (e, f, u, i) {
+    				if (!document.getElementById(i)){
+      				e.async = 1;
+      				e.src = u;
+      				e.id = i;
+      				f.parentNode.insertBefore(e, f);
+    				}
+  				}(document.createElement('script'),
+  				document.getElementsByTagName('script')[0],
+  				'//cdn.taboola.com/libtrc/styria-skysportaustria/loader.js',
+  				'tb_loader_script');
+  				if(window.performance && typeof window.performance.mark == 'function')
+    				{window.performance.mark('tbl_ic');}
+  			}
+			});
+		</script>
+					<script>
+				
+				function skyGetViewPort() {
+					
+          var w = window.innerWidth;
+          
+          if(w < 740) {
+              return "s";
+          } else if(w < 980) {
+             return  "m";
+          } else if(w < 1300) {
+              return "l";
+          } else {
+					 return "xl";
+          }
+          
+				}
+				
+				var skyData = {"pagePath":"\/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an","pagePathName":"sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an","pageName":"Sky sichert sich langfristig die Rechte an der Formel 1\u00ae f\u00fcr \u00d6sterreich ab 2021 und k\u00fcndigt den ersten 24-Stunden Formel 1 Sender des Landes an","hierachy1":"sport::formel-1","viewPort":"","hierachy2":"","hierachy3":"","levels":["sport","formel-1","",""],"pageId":"4147290","pageCMSHeadline":"Sky sichert sich langfristig die Rechte an der Formel 1\u00ae f\u00fcr \u00d6sterreich ab 2021 und k\u00fcndigt den ersten 24-Stunden Formel 1 Sender des Landes an","contentType":"artikel","hostname":"https:\/\/www.skysportaustria.at"}; 
+				skyData.viewPort = skyGetViewPort();
+				
+				waSky.page.setInfoBasic(skyData.pageName, skyData.hierachy1, skyData.viewPort, skyData.hierachy2, skyData.hierachy3, skyData.pageId, skyData.pageCMSHeadline, skyData.contentType);
+				waSky.page.setInfoAdvanced(true);
+				
+				window.adobeDataLayer = window.adobeDataLayer || [];
+				window.adobeDataLayer.push({ 
+					"event": "page view",
+					"page": {
+						"pageInfo": {
+							"pageName": skyData.pagePathName,
+							"pageId": skyData.pageId,
+							"contentType": skyData.contentType,
+							"hierachie1": skyData.hierachy1,
+							"viewPort": skyGetViewPort(),
+							"level1": skyData.levels[0],
+							"level2": skyData.levels[1],
+							"level3": skyData.levels[2],
+							"level4": skyData.levels[3],
+							"country": "at",
+							"hostname": skyData.hostname,
+							"pagePath": document.location.pathname,
+						}
+					}
+				});
+				
+			</script>
+			  <script type="text/javascript"> 
+      IOMm('configure', { st: 'at_w_atskyspaut', dn: 'data-5d2679d281.skysportaustria.at', cn: 'at', mh:5});
+      IOMm('pageview', { cp: 'RedCont/Sport/Sonstiges/moewa/skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an' });
+
+  	  window.oewa_config = { 
+    	  "cp":"RedCont/Sport/Sonstiges/moewa/skysportaustria.at/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an",
+  	  }; 
+
+		  	  </script> 
+    	  <script>
+			window.sky = {"rest_url":"https:\/\/www.skysportaustria.at\/wp-json\/","community_rest_url":"https:\/\/community.skysportaustria.at\/api","community_url":"https:\/\/community.skysportaustria.at","home_url":"https:\/\/www.skysportaustria.at","current_url":"https:\/\/www.skysportaustria.at\/sky-sichert-sich-langfristig-die-rechte-an-der-formel-1-fuer-oesterreich-ab-2021-und-kuendigt-den-ersten-24-stunden-formel-1-sender-des-landes-an\/","is_app":false,"device_type":"desktop"};
+			window.sky.device_type = window.innerWidth <= 640 ? 'mobile' : 'desktop';
+		</script>
+	  <style>.wp-block-gallery.is-cropped .blocks-gallery-item picture{height:100%;width:100%;}</style><link rel="apple-touch-icon" href="https://www.skysportaustria.at/wp-content/uploads/2020/02/favicon.png" />
+<meta name="msapplication-TileImage" content="https://www.skysportaustria.at/wp-content/uploads/2020/02/favicon.png" />
+	<meta name="apple-mobile-web-app-title" content="Sky Sport Austria">
+	<link rel="apple-touch-icon" href="https://www.skysportaustria.at/wp-content/themes/skysportaustria/images/apple-touch-icon.png">
+	<meta name="theme-color" content="#002A91">
+	<meta name="apple-itunes-app" content="app-id=6473779660">
+
+
+                              <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="N4F6D-82BZ2-XM8JP-HJQ9A-2L23P",function(){function e(){if(!r){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.appendChild(e),r=!0}}function t(e){r=!0;var n,t,a,i,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",i=(a.frameElement||a).style,i.width=0,i.height=0,i.border=0,i.display="none",o.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void 0;",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=14,window.BOOMR.url=n+"N4F6D-82BZ2-XM8JP-HJQ9A-2L23P";var i=document.currentScript||document.getElementsByTagName("script")[0],o=i.parentNode,r=!1,d=document.createElement("link");if(d.relList&&"function"==typeof d.relList.supports&&d.relList.supports("preload")&&"as"in d)window.BOOMR.snippetMethod="p",d.href=window.BOOMR.url,d.rel="preload",d.as="script",d.addEventListener("load",e),d.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!r)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.appendChild(d);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="kosjasqxzw4aoz7nkb4a-f-f4079cbb8-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"39","ak.cp":"410924","ak.ai":parseInt("263761",10),"ak.ol":"0","ak.cr":7,"ak.ipv":4,"ak.proto":"h2","ak.rid":"660b646","ak.r":45032,"ak.a2":n,"ak.m":"x","ak.n":"essl","ak.bpcip":"83.164.144.0","ak.cport":56918,"ak.gh":"2.18.78.30","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"","ak.t":"1743605880","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==YbeejOhcReNxmLWmAJ2V3lwLj7AWlQiUtKnxfrjtjb92mM162W1/C76l6H0d9oxMTwfiAruTy6kK59jRG9mMy4XXUAV263Ce7KR05R8W8iAiy4fkzAkdWbwDOqHo76J/uugdlHnHrOox92+mWRjNkbK4pT2m3SjQ/mQRAVoA2mFElrDvSznhFbx3/IgW/OsCd4AS20wYEKyhPEDw4P5/aSEA6Qafp+WrWs6favhzw+IJy4FYqMpO2u15K2crPnauGOuXrONyEtkd+fmUw6wpVmjDcJhKZYlz7kqMadAGlzQkaeWiWmje/Qy96epXMKEOgVHKU4d0LKdNy+AbKrhDSMq7TwhPpU50UrE1Wptcmsl7YQZ8DxnbjybkzF1Z27nPMeeU2s+lqOw/UF83Mw5RkTNRLMDuyjStMuaC+W2HOXc=","ak.pv":"38","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+
+<body data-rsssl=1 class="single">
+
+
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#primary">Zum Inhalt springen</a>
+	<header id="masthead" class="site-header">
+		<div class="site-header__branding">
+			<div class="site-header__branding-container inner">
+				<a href="https://www.skysportaustria.at/" rel="home" class="site-header__logo"><img src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/images/logo.svg?v=2" alt="Sky Sport Austria" width="246" height="30" class="site-header__logo-img"></a>
+				<div class="site-header__meta">
+					<div class="site-header__logout">
+						<a href="https://www.skysportaustria.at/logout?_nonce=8eb492cdd6" class="site-header__logout-button button button--white button--with-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd"><polygon fill="#2C2C2C" fill-rule="nonzero" points="10.854 4.818 14.036 8 10.854 11.182 10.146 10.475 12.121 8.5 5 8.5 5 7.5 12.121 7.5 10.146 5.525"/><polygon fill="#2C2C2C" fill-rule="nonzero" points="6 1.5 6 14.5 1.5 14.5 1.5 13.5 5 13.5 5 2.5 1.5 2.5 1.5 1.5" transform="matrix(-1 0 0 1 7.5 0)"/></g></svg> Logout</a>
+					</div>
+					<div class="site-header__search">
+						<form role="search" method="get" class="search-form" action="https://www.skysportaustria.at/">
+	<div class="searchform">
+		<input type="search" class="searchform__field" aria-label="Suche" placeholder="Suchen …" value="" name="s" id="search-input" />
+		<button type="submit" class="searchform__submit" aria-label="Suche absenden">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd" stroke="#2C2C2C"><circle cx="6.667" cy="6.667" r="4.714" transform="rotate(-45 6.667 6.667)"/><line x1="12.381" x2="12.381" y1="9.014" y2="15.748" transform="rotate(-45 12.381 12.381)"/></g></svg>
+		</button>
+	</div>
+</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="site-header__navigation js-header__navigation">
+			<div class="site-header__navigation-container inner">
+				<nav class="site-header__primary-navigation primary-navigation">
+					<div class="primary-navigation__menu"><ul id="main-menu" class="menu"><li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/news/" class="menu__link">News</a></li>
+<li class="menu__item has-children is-level-0"><a href="https://www.skysportaustria.at/fussball/" class="menu__link">Fußball</a><div class="menu__sub-container">
+<ul class="menu__sub-menu">
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/" class="menu__link">News</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball-tabellen/" class="menu__link">Tabellen</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/" class="menu__link">ADMIRAL Bundesliga</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/premier-league/" class="menu__link">Premier League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/deutsche-bundesliga/" class="menu__link">Deutsche Bundesliga</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/uefa-champions-league/" class="menu__link">Champions League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/uefa-europa-league/" class="menu__link">Europa League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/uefa-conference-league/" class="menu__link">Conference League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/oefb-cup/" class="menu__link">ÖFB-Cup</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/nationalteam/" class="menu__link">ÖFB-Team</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/2-deutsche-bundesliga/" class="menu__link">2. Deutsche Bundesliga</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-2liga/" class="menu__link">ADMIRAL 2. Liga</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/serie-a/" class="menu__link">Serie A</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/la-liga/" class="menu__link">La Liga</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/ligue-1/" class="menu__link">Ligue 1</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/dfb-pokal/" class="menu__link">DFB-Pokal</a></li>
+</ul>
+</div></li>
+<li class="menu__item has-children is-level-0"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/" class="menu__link">ADMIRAL Bundesliga</a><div class="menu__sub-container">
+<ul class="menu__sub-menu">
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/sk-sturm-graz/" class="menu__link">SK Sturm Graz</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/red-bull-salzburg/" class="menu__link">Red Bull Salzburg</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/sk-rapid/" class="menu__link">SK Rapid</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/fk-austria-wien/" class="menu__link">FK Austria Wien</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/lask/" class="menu__link">LASK</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/grazer-ak/" class="menu__link">GAK</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/wolfsberger-ac/" class="menu__link">Wolfsberger AC</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/tsv-hartberg/" class="menu__link">TSV Hartberg</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/blau-weiss-linz/" class="menu__link">FC Blau-Weiß Linz</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/scr-altach/" class="menu__link">SCR Altach</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/sk-austria-klagenfurt/" class="menu__link">SK Austria Klagenfurt</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/wsg-tirol/" class="menu__link">WSG Tirol</a></li>
+</ul>
+</div></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/livescores/" class="menu__link">Livescores</a></li>
+<li class="menu__item menu__item--videos is-level-0"><a href="https://www.skysportaustria.at/mediathek/" class="menu__link">Mediathek</a></li>
+<li class="menu__item menu__item--special menu__item--ankick is-level-0"><a target="_blank" href="https://ankick.skysportaustria.at/" class="menu__link">Ankick</a></li>
+<li class="menu__item menu__item--special menu__item--button is-level-0"><a href="https://www.skysportaustria.at/app/" class="menu__link">App</a></li>
+</ul></div>				</nav>
+				<div class="secondary-navigation js-secondary-navigation">
+					<button class="site-menu__toggle js-header__toggle" aria-controls="primary-menu" aria-expanded="false"><span class="site-menu__toggle-content site-menu__toggle-content--open"><span>Menü</span><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="evenodd"><line x1="1" x2="21" y1="6.5" y2="6.5" stroke="#2C2C2C" stroke-width="1.5"/><line x1="1" x2="21" y1="10.5" y2="10.5" stroke="#2C2C2C" stroke-width="1.5"/><line x1="1" x2="21" y1="14.5" y2="14.5" stroke="#2C2C2C" stroke-width="1.5"/></g></svg></span><span class="site-menu__toggle-content site-menu__toggle-content--closed"><span>Schließen</span><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g fill="none" fill-rule="evenodd"><line x1="1" x2="21" y1="10.5" y2="10.5" stroke="#2C2C2C" stroke-width="1.5" transform="rotate(45 11 10.5)"/><line x1="1" x2="21" y1="10.5" y2="10.5" stroke="#2C2C2C" stroke-width="1.5" transform="scale(-1 1) rotate(45 0 -16.056)"/></g></svg></span></button>
+					<nav class="site-header__secondary-navigation secondary-navigation__navigation">
+						<div class="secondary-navigation__container">
+							<div class="secondary-navigation__menu inner">
+								<div class="secondary-menu secondary-menu--1"><ul id="secondary-menu-1" class="menu"><li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/news/" class="menu__link">News</a></li>
+<li class="menu__item menu__item--videos is-level-0"><a href="https://www.skysportaustria.at/mediathek/" class="menu__link">Mediathek</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/livescores/" class="menu__link">Livescores</a></li>
+<li class="menu__item menu__item--ankick menu__item--special is-level-0"><a target="_blank" href="https://ankick.skysportaustria.at/" class="menu__link">Ankick</a></li>
+</ul></div>								<div class="secondary-menu secondary-menu--3"><ul id="secondary-menu-2" class="menu"><li class="menu__item menu__item--open has-children is-level-0"><a href="https://www.skysportaustria.at/fussball/" class="menu__link">Fußball</a>
+<ul class="menu__sub-menu">
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball-tabellen/" class="menu__link">Tabellen</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/admiral-bundesliga/" class="menu__link">ADMIRAL Bundesliga</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/premier-league/" class="menu__link">Premier League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/uefa-champions-league/" class="menu__link">UEFA Champions League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/uefa-europa-league/" class="menu__link">UEFA Europa League</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/fussball/uefa-conference-league/" class="menu__link">UEFA Conference League</a></li>
+	<li class="menu__item has-children is-level-1"><a href="#more" class="menu__link">Mehr</a>
+	<ul class="menu__sub-menu">
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/deutsche-bundesliga/" class="menu__link">Deutsche Bundesliga</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/2-deutsche-bundesliga/" class="menu__link">2. Deutsche Bundesliga</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/dfb-pokal/" class="menu__link">DFB-Pokal</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/admiral-2liga/" class="menu__link">ADMIRAL 2. Liga</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/nationalteam/" class="menu__link">ÖFB-Team</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/oefb-cup/" class="menu__link">ÖFB-Cup</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/serie-a/" class="menu__link">Serie A</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/la-liga/" class="menu__link">La Liga</a></li>
+		<li class="menu__item is-level-2"><a href="https://www.skysportaustria.at/fussball/ligue-1/" class="menu__link">Ligue 1</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+</ul></div>								<div class="secondary-menu secondary-menu--3"><ul id="secondary-menu-3" class="menu"><li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/formel-1/" class="menu__link">Formel 1</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/tennis/" class="menu__link">Tennis</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/eishockey/" class="menu__link">Eishockey</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/golf/" class="menu__link">Golf</a></li>
+<li class="menu__item has-children is-level-0"><a href="https://www.skysportaustria.at/wintersport/" class="menu__link">Wintersport</a>
+<ul class="menu__sub-menu">
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/wintersport/ski-alpin/" class="menu__link">Ski Alpin</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/wintersport/skispringen/" class="menu__link">Skispringen</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/wintersport/biathlon/" class="menu__link">Biathlon</a></li>
+</ul>
+</li>
+<li class="menu__item has-children is-level-0"><a href="#more" class="menu__link">Mehr Sport</a>
+<ul class="menu__sub-menu">
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/motorsport/motogp/" class="menu__link">MotoGP</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/basketball/" class="menu__link">Basketball</a></li>
+	<li class="menu__item is-level-1"><a href="https://www.skysportaustria.at/american-football/" class="menu__link">American Football</a></li>
+</ul>
+</li>
+</ul></div>								<div class="secondary-menu secondary-menu--4"><ul id="secondary-menu-4" class="menu"><li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/podcasts/" class="menu__link">Podcasts</a></li>
+<li class="menu__item menu__item--spi menu__item--special is-level-0"><a href="https://www.skysportaustria.at/index/" class="menu__link">Sky Player Index</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/app/" class="menu__link">App</a></li>
+</ul></div>							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	
+			
+						<nav class="site-breadcrumbs breadcrumbs site-header__extend">
+		<div class="breadcrumbs__container inner">
+			<ul class="breadcrumbs__items">
+								<li class="breadcrumbs__item ">
+					<a class="breadcrumbs__element breadcrumbs__element--link" href="https://www.skysportaustria.at/news/">News</a>				</li>
+								<li class="breadcrumbs__item ">
+					<a class="breadcrumbs__element breadcrumbs__element--link" href="https://www.skysportaustria.at/formel-1/">Formel 1</a>				</li>
+							</ul>
+		</div>
+	</nav>
+				
+	</header>
+	
+		
+	<div class="site-ad site-ad--top ad-container">
+		<aside class="ad wide-skyscraper">	<div id="sas_22375"></div> 
+	<script>
+		if(window.sky.device_type == "desktop"){
+			sas.cmd.push(function() {
+				sas.render("22375"); 
+			});
+		}
+	</script>
+	</aside>
+		<aside class="ad billboard inner">	<div id="sas_22374"></div> 
+	<script>
+		if(window.sky.device_type == "desktop"){
+			sas.cmd.push(function() {
+				sas.render("22374"); 
+			});
+		}
+	</script>
+	</aside>
+<aside class="ad billboard inner">	<div id="sas_23170"></div> 
+	<script>
+		if(window.sky.device_type == "desktop"){
+			sas.cmd.push(function() {
+				sas.render("23170"); 
+			});
+		}
+	</script>
+	</aside>
+	</div>
+	<main id="main" class="site-main">
+		<div class="single__container single__container--sidebar inner">
+			<div class="single__main">
+				
+<article class="post">
+
+	<div class="post__media">
+		<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-976x651.jpg" class="attachment-large size-large wp-post-image" alt="" loading="eager" decoding="async" fetchpriority="high" srcset="https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-976x650.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2020/06/imago0045320594h-2048x1365.jpg 2048w" sizes="(max-width: 976px) 100vw, 976px" />	</div>
+
+	<header class="post__header">
+		<div class="post__meta">
+    	<div class="post__kicker">Formel 1</div>
+		</div>
+
+		<h1 class="post__title headline headline--main">Sky sichert sich langfristig die Rechte an der Formel 1® für Österreich ab 2021 und kündigt den ersten 24-Stunden Formel 1 Sender des Landes an</h1>    
+		<div class="post__sub-meta">
+			<time class="post__date" datetime="2020-06-22 16:13:49">22.06.2020, 16:13</time>
+								</div>
+	</header>
+	
+	<div class="post__content text text--rich text--content insert-ad">
+			<div id="sas_23362"></div> 
+	<script>
+		if(window.sky.device_type == "mobile"){
+			document.addEventListener('DOMContentLoaded', function () {
+				SkySportAustria.injectUnderstitial("sas_23362");
+				sas.cmd.push(function() {
+					sas.render("23362"); 
+				});
+			});
+		}
+	</script>
+		<div id="sas_23167"></div> 
+	<script>
+		if(window.sky.device_type == "desktop"){
+			document.addEventListener('DOMContentLoaded', function () {
+				SkySportAustria.injectUnderstitial("sas_23167");
+				sas.cmd.push(function() {
+					sas.render("23167"); 
+				});
+			});
+		}
+	</script>
+			<ul>
+<li><strong>Damit zeigt Sky auch in der neuen Rechteperiode ab 2021 das komplette Formel-1-Wochenende live in Österreich, auch in Ultra HD</strong></li>
+<li><strong>Sky erreicht mit Sky Sport F1 die Fans über die verschiedenen Verbreitungswege Sky Q, Sky Go, Sky X, Sky Sportsbars und Digital</strong></li>
+<li><strong>Bereits ab der Saison 2020: Sämtliche Rennen der Formel 2, sowie alle Rennen der Formel 3 und Porsche Super Cup auf Sky</strong></li>
+<li><strong>Ralf Schumacher bleibt Formel 1 Experte bei Sky</strong></li>
+</ul>
+<p>Formel 1 Fans können sich auf das beste Motorsport-Erlebnis freuen, das es je in Österreichs Fernsehen gab: Sky hat sich ab der Saison 2021 langfristig die Übertragungsrechte an der Formel 1 gesichert. Sky wird alle Rennwochenenden der Formel 1 live übertragen – vom ersten freien Training bis zum Rennen am Sonntag. Sämtliche Rennen und die meisten Qualifyings sind zudem in Ultra HD verfügbar. Mit „Sky Sport F1“ wird Sky den ersten linearen Formel 1-Sender im österreichischen Fernsehen an den Start bringen, der täglich 24 Stunden ausschließlich Motorsport-Content zeigt. Zudem wird Sky mehr digitale und Social Media Inhalte denn je über die verschiedenen Plattformen verbreiten. Sky erreicht künftig auf diesen crossmedialen Verbreitungswegen hunderttausende Formel 1 Fans.</p>
+<p>Unter der Marke „Sky Sport F1“ wird Sky das beste Fernseherlebnis der Königsklasse des Motorsports aller Zeiten im österreichischen TV bieten, mit mehr Motorsport-Content als jemals zuvor:</p>
+<ul>
+<li>Österreichs erster 24-Stunden Formel 1-Sender, der von dem hohen Produktionsstandard des internationalen Formel 1 Teams von Sky profitiert mit bestem Produktionsmaterial zu Fahrern, Teams, Fabriken, Archiven und vieles mehr</li>
+<li>Jedes Rennen, Training und Pressekonferenz, live in HD ohne Werbeunterbrechungen während des Renngeschehens</li>
+<li>360-Grad Formel 1 Erlebnis auf Sky: Mehr digitaler und Social Content auf <a href="https://protect-eu.mimecast.com/s/l05qCNY9oSmDB9UmB2o8?domain=skysportaustria.at">skysportaustria.at</a> und Social Media als jemals zuvor</li>
+<li>Alle Rennen und in der Regel alle Qualifyings live in Ultra HD für Sky Q Kunden</li>
+<li>30 Live-Stunden an den Rennwochenenden und insgesamt 800 Stunden Motorsportprogramm pro Jahr</li>
+<li>Tägliche Berichterstattung auf Sky Sport News HD mit Dokumentationen, Shows und vielen weiteren Spezialformaten. Nähere Details zum redaktionellen Konzept werden rechtzeitig vor Beginn der Saison 2021 bekanntgegeben</li>
+</ul>
+<p>Neil O‘Rourke, CEO Sky Österreich: „Die Formel 1 genießt in Österreich dank seiner Legenden wie Jochen Rindt oder Niki Lauda einen ganz besonderen Stellenwert. Deshalb freut es mich umso mehr, dass wir in Zukunft unseren Zuschauern das beste Motorsport-Erlebnis aller Zeiten bieten werden. Wir werden die Formel 1 Fans mit Österreichs erstem 24-Stunden Formel 1 Sender und mehr Rennsport-Content als jemals zuvor im österreichischen Fernsehen bestens unterhalten. Außerdem wird jedes Rennen in bestechender Ultra HD Bildqualität verfügbar sein. Dieser großartige neue Deal zeigt, dass Sky die erste Adresse für alle Motorsportbegeisterte in Österreich ist.“</p>
+<p>Ian Holmes, Director Media Rights, Formel 1: „Die Formel 1 und Sky pflegen eine langjährige Partnerschaft und arbeiten gut zusammen, um die Formel 1 Übertragungen durch eine umfassende Berichterstattung über den Sport für unsere leidenschaftliche Motorsport-Fangemeinde zu verbessern. Ich freue mich sehr, dass wir unsere Zusammenarbeit intensivieren und die beeindruckende Programmqualität von Sky und digitale Reichweite weiter ausbauen werden.“</p>
+<p>Somit können Sky Kunden mit dem Sky Sport Paket sowohl im klassischen linearen Fernsehen als auch per Streaming mit Sky Go immer und überall live dabei sein, wenn Lewis Hamilton und Co. die Motoren aufheulen lassen. Zudem können Formel-1-Fans, die noch kein Sky Abonnement haben, die Königsklasse des Motorsports über den neuen, monatlich kündbaren Streamingdienst Sky X live verfolgen.</p>
+<p>Der neue Vertrag umfasst die Live-Übertragungsrechte über alle Verbreitungswege &#8211; Satellit, Kabel, IPTV, Web und Mobile – in Österreich.</p>
+<p><strong>30 Live-Rennstunden pro Wochenende durch Formel 1, 2, 3 und Porsche Super Cup</strong><br />
+Sky wird bereits ab der Saison 2020 zusätzlich zur Formel 1 sämtliche Sessions der Formel 2 sowie alle Rennen der Formel 3 sowie den Porsche Super Cup zeigen.</p>
+<div class="wp-block-ad-msg"><a class="ad-msg" href="https://skyx.sky.at/sport/premier-league?DCMP=ilc-SSA-na-pl_banner-nor-eve" target="_blank"><img decoding="async" src="" class="ad-msg__image ad-msg__image--mobile" alt="Werbung" /></a></div>
+<p>Beitragsbild: Imago</p>
+	</div>
+
+	<div class="post__related-posts">	
+<div class="related-posts">
+	<div class="related-posts__wrapper"> 
+		<div class="related-posts__items">
+					
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="591" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-976x591.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-976x591.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-300x182.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-768x465.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-1536x930.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-2048x1240.jpg 2048w" sizes="(max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">ADMIRAL 2. Liga</div>
+    	<div class="card-post__date">16:43</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/rapid-verlaengert-vorzeitig-mit-youngster/" class="card-post__link link-all" rel="bookmark">Rapid verlängert vorzeitig mit Youngster</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-976x651.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-976x651.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-2048x1365.jpg 2048w" sizes="(max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">ÖFB-Cup</div>
+    	<div class="card-post__date">16:15</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/wwer-zieht-ins-oefb-cupfinale-ein-so-stimmt-die-sky-community-ab/" class="card-post__link link-all" rel="bookmark">Wer zieht ins ÖFB-Cupfinale ein? So stimmt die Sky-Community ab</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="549" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-976x549.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-976x549.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-300x169.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-768x432.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-1536x864.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563.jpg 1600w" sizes="(max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Deutsche Bundesliga</div>
+    	<div class="card-post__date">15:08</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/ex-bayern-star-ribery-ueber-mueller-ich-persoenlich-hoffe-dass/" class="card-post__link link-all" rel="bookmark">Ex-Bayern-Star Ribery über Müller: &#8222;Ich persönlich hoffe, dass&#8230;&#8220;</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="649" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-976x649.jpg" class="attachment-large size-large wp-post-image" alt="Christoph Sumann übernimmt im ÖSV das Amt des Sportlichen Leiters der Sparte Biathlon. Der 49-Jährige tritt die Nachfolge von Franz Berger an" decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-976x649.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-768x511.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-1536x1022.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-2048x1363.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Biathlon</div>
+    	<div class="card-post__date">14:24</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/nachfolger-gefunden-christoph-sumann-neuer-sportlicher-biathlon-leiter/" class="card-post__link link-all" rel="bookmark">Nachfolger gefunden: Christoph Sumann neuer Sportlicher Biathlon-Leiter</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-976x651.jpg" class="attachment-large size-large wp-post-image" alt="&quot;Ich bin mir im Klaren, dass ein Konflikt entstehen könnte, wenn man nicht aufpasst&quot;, sagte der McLaren-Boss über seine beiden Überflieger." decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-976x651.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-2048x1365.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Formel 1</div>
+    	<div class="card-post__date">14:17</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/piastri-oder-norris-mclaren-will-die-wm-krone/" class="card-post__link link-all" rel="bookmark">Piastri oder Norris? McLaren will die WM-Krone</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-976x651.jpg" class="attachment-large size-large wp-post-image" alt="Die österreichische Fußball-Nationalspielerin Annabel Schasching wechselt innerhalb der Bundesliga vom SC Freiburg zu RB Leipzig." decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-976x651.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-2048x1365.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Frauen-Fußball</div>
+    	<div class="card-post__date">13:48</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/oefb-teamspielerin-wechselt-von-freiburg-nach-leipzig/" class="card-post__link link-all" rel="bookmark">ÖFB-Teamspielerin wechselt von Freiburg nach Leipzig</a></h2>	</header>
+
+</article>
+				</div>
+	</div>
+	</div>
+</div>			<aside class="ad mma">	<div id="sas_23366"></div> 
+	<script>
+		if(window.sky.device_type == "mobile"){
+			sas.cmd.push(function() {
+				sas.render("23366"); 
+			});
+		}
+	</script>
+	</aside>
+	<div id="taboola-feed-below-article"></div>
+<script type="text/javascript">
+  window._taboola = window._taboola || [];
+  _taboola.push({
+    mode: 'alternating-thumbnails-a',
+    container: 'taboola-feed-below-article',
+    placement: 'Feed below article',
+    target_type: 'mix'
+  });
+</script></article>
+
+
+			</div>
+			<div class="single__aside sidebar">
+				<div class="sidebar__container">
+					 <aside class="ad medium-rectangle sidebar__ad">	<div id="sas_22373"></div> 
+	<script>
+		if(window.sky.device_type == "desktop"){
+			sas.cmd.push(function() {
+				sas.render("22373"); 
+			});
+		}
+	</script>
+	</aside>
+
+ <div class="sidebar__related-posts">	
+<div class="related-posts">
+	<div class="related-posts__wrapper"> 
+		<div class="related-posts__items">
+					
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="591" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-976x591.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-976x591.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-300x182.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-768x465.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-1536x930.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20241001-101-108-0026-scaled-e1743604397456-2048x1240.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">ADMIRAL 2. Liga</div>
+    	<div class="card-post__date">16:43</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/rapid-verlaengert-vorzeitig-mit-youngster/" class="card-post__link link-all" rel="bookmark">Rapid verlängert vorzeitig mit Youngster</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-976x651.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-976x651.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20240501-101-105-0006-2048x1365.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">ÖFB-Cup</div>
+    	<div class="card-post__date">16:15</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/wwer-zieht-ins-oefb-cupfinale-ein-so-stimmt-die-sky-community-ab/" class="card-post__link link-all" rel="bookmark">Wer zieht ins ÖFB-Cupfinale ein? So stimmt die Sky-Community ab</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="549" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-976x549.jpg" class="attachment-large size-large wp-post-image" alt="" decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-976x549.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-300x169.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-768x432.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563-1536x864.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/skysport_de-ribery-mller_6873563.jpg 1600w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Deutsche Bundesliga</div>
+    	<div class="card-post__date">15:08</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/ex-bayern-star-ribery-ueber-mueller-ich-persoenlich-hoffe-dass/" class="card-post__link link-all" rel="bookmark">Ex-Bayern-Star Ribery über Müller: &#8222;Ich persönlich hoffe, dass&#8230;&#8220;</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="649" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-976x649.jpg" class="attachment-large size-large wp-post-image" alt="Christoph Sumann übernimmt im ÖSV das Amt des Sportlichen Leiters der Sparte Biathlon. Der 49-Jährige tritt die Nachfolge von Franz Berger an" decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-976x649.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-768x511.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-1536x1022.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/GEPA-20250215-101-156-0139-2048x1363.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Biathlon</div>
+    	<div class="card-post__date">14:24</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/nachfolger-gefunden-christoph-sumann-neuer-sportlicher-biathlon-leiter/" class="card-post__link link-all" rel="bookmark">Nachfolger gefunden: Christoph Sumann neuer Sportlicher Biathlon-Leiter</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-976x651.jpg" class="attachment-large size-large wp-post-image" alt="&quot;Ich bin mir im Klaren, dass ein Konflikt entstehen könnte, wenn man nicht aufpasst&quot;, sagte der McLaren-Boss über seine beiden Überflieger." decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-976x651.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060251268-2048x1365.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Formel 1</div>
+    	<div class="card-post__date">14:17</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/piastri-oder-norris-mclaren-will-die-wm-krone/" class="card-post__link link-all" rel="bookmark">Piastri oder Norris? McLaren will die WM-Krone</a></h2>	</header>
+
+</article>
+			
+						
+						
+<article class="related-posts__item card-post card-post--overlay">
+			<div class="card-post__image">
+			<img width="976" height="651" src="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-976x651.jpg" class="attachment-large size-large wp-post-image" alt="Die österreichische Fußball-Nationalspielerin Annabel Schasching wechselt innerhalb der Bundesliga vom SC Freiburg zu RB Leipzig." decoding="async" loading="lazy" srcset="https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-976x651.jpg 976w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-300x200.jpg 300w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-768x512.jpg 768w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-1536x1024.jpg 1536w, https://www.skysportaustria.at/wp-content/uploads/2025/04/imago1060028385-2048x1365.jpg 2048w" sizes="auto, (max-width: 976px) 100vw, 976px" />		</div>
+		
+		
+	<header class="card-post__header">
+		<div class="card-post__meta">
+    	<div class="card-post__kicker">Frauen-Fußball</div>
+    	<div class="card-post__date">13:48</div>
+		</div>
+		<h2 class="card-post__title"><a href="https://www.skysportaustria.at/oefb-teamspielerin-wechselt-von-freiburg-nach-leipzig/" class="card-post__link link-all" rel="bookmark">ÖFB-Teamspielerin wechselt von Freiburg nach Leipzig</a></h2>	</header>
+
+</article>
+				</div>
+	</div>
+	</div>
+</div>		
+ <aside class="ad medium-rectangle sidebar__ad">	<div id="sas_23175"></div> 
+	<script>
+		if(window.sky.device_type == "desktop"){
+			sas.cmd.push(function() {
+				sas.render("23175"); 
+			});
+		}
+	</script>
+	</aside>
+				</div>
+			</div>
+		</div>
+	</main>
+
+
+	<footer class="site-footer">
+    <div class="site-footer__container inner">
+		  <div class="site-footer__columns">
+		  	<div class="site-footer__column">
+					<h4 class="site-footer__title headline headline--sub">Sportarten</h4>
+	        <ul id="menu-footer-sport" class="menu"><li class="menu__item is-level-0"><a href="https://www.skysportaustria.at" class="menu__link">Home</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/kategorie/fussball/" class="menu__link">Fußball</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/eishockey-at/" class="menu__link">Eishockey</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/golf/" class="menu__link">Golf</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/basketball-at/" class="menu__link">Basketball</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/f1/" class="menu__link">Formel 1</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/tennis/" class="menu__link">Tennis</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/mehr-sport/" class="menu__link">Mehr Sport</a></li>
+</ul>				</div>
+		  	<div class="site-footer__column">
+					<h4 class="site-footer__title headline headline--sub">Mehr von Sky</h4>
+	        <ul id="menu-footer-mehr" class="menu"><li class="menu__item is-level-0"><a target="_blank" href="https://www.sky.at/" class="menu__link">Sky bestellen</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="http://www.sky.at/tvguide" class="menu__link">Live auf Sky</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="https://www.sky.at/bestellung/aktuelle-angebote-sport-188546" class="menu__link">Sky Q – Sat/Kabel</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="http://www.business.sky.de/" class="menu__link">Sky Business</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="https://skyx.sky.at/angebote/sport-und-live-tv?DCMP=ilc-SSA-na-performance_sport-textlink_footer" class="menu__link">Sky X – Streaming</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/live/" class="menu__link">SSNHD Live</a></li>
+</ul>				</div>
+		  </div>
+			<div class="site-footer__info">
+        <ul id="menu-footer-social" class="menu"><li class="menu__item is-level-0"><a target="_blank" href="https://www.facebook.com/SkySportAustria/" class="menu__link">Facebook</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="https://twitter.com/SkySportAustria/" class="menu__link">Twitter</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="https://www.instagram.com/skysportaustria/" class="menu__link">Instagram</a></li>
+<li class="menu__item is-level-0"><a target="_blank" href="https://www.youtube.com/user/skysportaustria" class="menu__link">Youtube</a></li>
+</ul>			</div>
+			<div class="site-footer__social">
+        <ul id="menu-footer-bottom" class="menu"><li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/about/sky-oesterreich/" class="menu__link">Über</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/impressum/" class="menu__link">Impressum</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/datenschutz/" class="menu__link">Datenschutz &#038; Cookies</a></li>
+<li class="menu__item is-level-0"><a href="#open-privacy-manager" class="menu__link">Datenschutzeinstellungen</a></li>
+<li class="menu__item is-level-0"><a href="https://www.skysportaustria.at/nutzungsbedingungen/" class="menu__link">Nutzungsbedingungen</a></li>
+</ul>			</div>
+			<div class="site-footer__copyright">
+        <a href="/" class="site-footer__copyright-link"><img src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/images/logo-footer.svg" alt="Sky Sport Austria" class="site-footer__copyright-logo" width="80" height="19">
+        </a>
+				<div class="site-footer__copyright-info">&copy; 2013–2025 Sky Sport Austria</div>
+			</div>
+    </div>
+	</footer>
+</div>
+
+		<script type="text/javascript">
+  		window._taboola = window._taboola || [];
+  		_taboola.push({flush: true});
+		</script>
+		<script type="text/javascript">_satellite.pageBottom();</script><script type="text/javascript" id="sky-player-js-before">
+/* <![CDATA[ */
+window.sky = window.sky || {}; window.sky.player = {"baseIdUrl":"https:\/\/id.skysportaustria.at","baseUrl":"https:\/\/www.skysportaustria.at","baseDomain":"skysportaustria.at"};
+/* ]]> */
+</script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/plugins/sky-player/js/player.js?ver=1692177536" id="sky-player-js"></script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/js/analytics.js?ver=1742291614" id="sky-analytics-js"></script>
+<script type="text/javascript" id="sky-community-js-before">
+/* <![CDATA[ */
+window.skyCommunity = {user: null, authenticated: null, loaded: false}
+/* ]]> */
+</script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/js/community.js?ver=1742291614" id="sky-community-js"></script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/js/navigation.js?ver%5B0%5D=1742291614" id="sky-navigation-js"></script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/js/main.js?ver%5B0%5D=1742291615" id="sky-main-js"></script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/js/header.js?ver%5B0%5D=1742291614" id="sky-header-js"></script>
+<script type="text/javascript" defer="defer" src="https://www.skysportaustria.at/wp-content/themes/skysportaustria/js/gallery.js?ver%5B0%5D=1742308895" id="sky-gallery-js"></script>
+
+<script type="text/javascript"  src="/Sjk8T0/44/F8/5dGY/MXT-LvTJom/iSuONri1tO6J/MzUAAg/ABA1SAp/qKmM"></script></body>
+</html>
